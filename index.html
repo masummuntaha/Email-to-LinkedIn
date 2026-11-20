@@ -1,0 +1,782 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Email to LinkedIn - Email to LinkedIn Profile Finder</title>
+
+    <meta name="description" content="Email to LinkedIn is an email-to-LinkedIn profile finder and LinkedIn account checker. Discover LinkedIn profile links from email addresses and check account status.">
+    <meta name="keywords" content="Email to LinkedIn, Email to LinkedIn Profile Finder, Email to LinkedIn Profile Link, LinkedIn Profile Finder, LinkedIn Account Checker, LinkedIn Live Checker, LinkedIn Email Finder, LinkedIn URL Finder, Bulk Email Checker, LinkedIn Tools">
+    <meta name="author" content="Masum Muntaha">
+    <meta name="robots" content="index, follow, max-image-preview:large">
+
+    <link rel="canonical" href="https://masummuntaha.github.io/Email-to-LinkedIn/">
+
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Email to LinkedIn - Profile Finder">
+    <meta property="og:description" content="Find LinkedIn profile links from email addresses. Explore the Email-to-LinkedIn tool on GitHub.">
+    <meta property="og:url" content="https://masummuntaha.github.io/Email-to-LinkedIn/">
+    <meta property="og:site_name" content="Email to LinkedIn">
+
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Email to LinkedIn - Profile Finder">
+    <meta name="twitter:description" content="An email-to-LinkedIn profile finder and account checking tool.">
+
+    <meta name="theme-color" content="#080d19">
+
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "SoftwareApplication",
+        "name": "Email-to-LinkedIn",
+        "alternateName": "Email to LinkedIn Profile Finder",
+        "description": "An email-to-LinkedIn profile link finder and LinkedIn account checker.",
+        "applicationCategory": "BusinessApplication",
+        "operatingSystem": "Cross-platform",
+        "author": {
+            "@type": "Person",
+            "name": "Masum Muntaha",
+            "url": "https://github.com/masummuntaha"
+        },
+        "codeRepository": "https://github.com/masummuntaha/Email-to-LinkedIn",
+        "url": "https://masummuntaha.github.io/Email-to-LinkedIn/"
+    }
+    </script>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --bg: #080d19;
+            --surface: #101a2d;
+            --surface2: #14213a;
+            --text: #f1f5ff;
+            --muted: #9aa9c0;
+            --blue: #3985ff;
+            --cyan: #43d5e8;
+            --border: rgba(148, 163, 184, .15);
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background: var(--bg);
+            color: var(--text);
+            font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+            line-height: 1.7;
+            overflow-x: hidden;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        .container {
+            width: min(1120px, 90%);
+            margin: auto;
+        }
+
+        header {
+            position: sticky;
+            top: 0;
+            z-index: 10;
+            background: rgba(8, 13, 25, .88);
+            backdrop-filter: blur(18px);
+            border-bottom: 1px solid var(--border);
+        }
+
+        nav {
+            height: 76px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 11px;
+            font-size: 20px;
+            font-weight: 800;
+            letter-spacing: -.7px;
+        }
+
+        .logo-icon {
+            width: 39px;
+            height: 39px;
+            border-radius: 12px;
+            background: linear-gradient(135deg, #3985ff, #39c8e8);
+            display: grid;
+            place-items: center;
+            color: white;
+            font-size: 21px;
+            font-weight: 900;
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 30px;
+            color: var(--muted);
+            font-size: 14px;
+        }
+
+        .nav-links a:hover {
+            color: white;
+        }
+
+        .button {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 9px;
+            padding: 13px 22px;
+            border-radius: 10px;
+            font-size: 14px;
+            font-weight: 700;
+            transition: .25s;
+        }
+
+        .button-primary {
+            background: linear-gradient(120deg, #3985ff, #2563eb);
+            color: white;
+            box-shadow: 0 8px 30px rgba(37, 99, 235, .25);
+        }
+
+        .button-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 35px rgba(37, 99, 235, .4);
+        }
+
+        .button-outline {
+            border: 1px solid var(--border);
+            background: rgba(255, 255, 255, .035);
+        }
+
+        .button-outline:hover {
+            border-color: var(--blue);
+            background: rgba(57, 133, 255, .1);
+        }
+
+        .hero {
+            position: relative;
+            padding: 115px 0 105px;
+            text-align: center;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: "";
+            position: absolute;
+            width: 650px;
+            height: 450px;
+            background: radial-gradient(ellipse, rgba(37, 99, 235, .2), transparent 70%);
+            top: -150px;
+            left: 50%;
+            transform: translateX(-50%);
+            pointer-events: none;
+        }
+
+        .hero-content {
+            position: relative;
+            max-width: 850px;
+            margin: auto;
+        }
+
+        .tag {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 7px 14px;
+            border: 1px solid rgba(67, 213, 232, .25);
+            border-radius: 30px;
+            background: rgba(67, 213, 232, .07);
+            color: var(--cyan);
+            font-size: 12px;
+            font-weight: 700;
+            margin-bottom: 25px;
+        }
+
+        .tag span {
+            width: 7px;
+            height: 7px;
+            background: var(--cyan);
+            border-radius: 50%;
+        }
+
+        h1 {
+            font-size: clamp(38px, 6vw, 68px);
+            line-height: 1.12;
+            letter-spacing: -2.5px;
+            font-weight: 850;
+            margin-bottom: 24px;
+        }
+
+        .gradient-text {
+            background: linear-gradient(100deg, #48a0ff, #4ce0df);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .hero-description {
+            max-width: 680px;
+            margin: auto;
+            color: var(--muted);
+            font-size: 17px;
+        }
+
+        .hero-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 14px;
+            flex-wrap: wrap;
+            margin-top: 35px;
+        }
+
+        .hero-note {
+            color: #77869f;
+            font-size: 12px;
+            margin-top: 22px;
+        }
+
+        .section {
+            padding: 85px 0;
+        }
+
+        .section-heading {
+            text-align: center;
+            margin-bottom: 45px;
+        }
+
+        .section-heading h2 {
+            font-size: clamp(27px, 4vw, 39px);
+            letter-spacing: -1px;
+            margin-bottom: 12px;
+        }
+
+        .section-heading p {
+            color: var(--muted);
+            max-width: 620px;
+            margin: auto;
+            font-size: 15px;
+        }
+
+        .features {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+        }
+
+        .feature-card {
+            padding: 27px;
+            background: linear-gradient(145deg, var(--surface), #0c1526);
+            border: 1px solid var(--border);
+            border-radius: 17px;
+            transition: .25s;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+            border-color: rgba(57, 133, 255, .5);
+        }
+
+        .feature-icon {
+            width: 48px;
+            height: 48px;
+            display: grid;
+            place-items: center;
+            background: rgba(57, 133, 255, .12);
+            border-radius: 13px;
+            font-size: 23px;
+            margin-bottom: 20px;
+        }
+
+        .feature-card h3 {
+            font-size: 18px;
+            margin-bottom: 9px;
+        }
+
+        .feature-card p {
+            font-size: 14px;
+            color: var(--muted);
+        }
+
+        .workflow {
+            background: linear-gradient(180deg, transparent, rgba(16, 26, 45, .65), transparent);
+        }
+
+        .steps {
+            max-width: 760px;
+            margin: auto;
+            display: grid;
+            gap: 18px;
+        }
+
+        .step {
+            display: flex;
+            gap: 20px;
+            align-items: flex-start;
+            padding: 22px;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 14px;
+        }
+
+        .step-number {
+            flex-shrink: 0;
+            width: 38px;
+            height: 38px;
+            display: grid;
+            place-items: center;
+            border-radius: 11px;
+            background: rgba(57, 133, 255, .15);
+            color: #67a8ff;
+            font-weight: 800;
+        }
+
+        .step h3 {
+            font-size: 16px;
+            margin-bottom: 4px;
+        }
+
+        .step p {
+            color: var(--muted);
+            font-size: 14px;
+        }
+
+        .showcase {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 45px;
+            align-items: center;
+        }
+
+        .showcase h2 {
+            font-size: 35px;
+            line-height: 1.2;
+            letter-spacing: -1px;
+            margin-bottom: 18px;
+        }
+
+        .showcase p {
+            color: var(--muted);
+            margin-bottom: 22px;
+        }
+
+        .showcase-image {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            padding: 12px;
+            border-radius: 17px;
+            overflow: hidden;
+        }
+
+        .showcase-image img {
+            display: block;
+            width: 100%;
+            height: auto;
+            border-radius: 9px;
+        }
+
+        .keyword-section {
+            padding: 65px 0;
+            border-top: 1px solid var(--border);
+            border-bottom: 1px solid var(--border);
+            background: rgba(16, 26, 45, .4);
+        }
+
+        .keywords {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 25px;
+        }
+
+        .keyword {
+            border: 1px solid var(--border);
+            border-radius: 30px;
+            padding: 7px 13px;
+            color: #aebdd2;
+            background: rgba(255, 255, 255, .025);
+            font-size: 12px;
+        }
+
+        .cta {
+            padding: 75px 25px;
+            margin: 80px auto;
+            text-align: center;
+            border: 1px solid rgba(57, 133, 255, .25);
+            border-radius: 23px;
+            background: radial-gradient(ellipse at top, rgba(37, 99, 235, .19), transparent 75%), var(--surface);
+        }
+
+        .cta h2 {
+            font-size: clamp(27px, 4vw, 39px);
+            margin-bottom: 13px;
+        }
+
+        .cta p {
+            color: var(--muted);
+            margin-bottom: 27px;
+        }
+
+        footer {
+            border-top: 1px solid var(--border);
+            padding: 32px 0;
+        }
+
+        .footer-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .footer-content p {
+            color: var(--muted);
+            font-size: 13px;
+        }
+
+        .footer-links {
+            display: flex;
+            gap: 22px;
+            font-size: 13px;
+            color: var(--muted);
+        }
+
+        .footer-links a:hover {
+            color: white;
+        }
+
+        @media(max-width: 800px) {
+            .features {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .showcase {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media(max-width: 600px) {
+            nav {
+                height: 65px;
+            }
+
+            .nav-links {
+                gap: 12px;
+                font-size: 12px;
+            }
+
+            .nav-links a:not(.button) {
+                display: none;
+            }
+
+            .nav-links .button {
+                padding: 9px 12px;
+            }
+
+            .logo {
+                font-size: 16px;
+            }
+
+            .hero {
+                padding: 85px 0 75px;
+            }
+
+            h1 {
+                letter-spacing: -1.5px;
+            }
+
+            .hero-description {
+                font-size: 15px;
+            }
+
+            .features {
+                grid-template-columns: 1fr;
+            }
+
+            .section {
+                padding: 65px 0;
+            }
+
+            .step {
+                gap: 13px;
+                padding: 17px;
+            }
+
+            .showcase h2 {
+                font-size: 29px;
+            }
+
+            .footer-content {
+                flex-direction: column;
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<header>
+    <div class="container">
+        <nav>
+            <a href="#" class="logo">
+                <span class="logo-icon">E</span>
+                <span>Email<span class="gradient-text">2</span>LinkedIn</span>
+            </a>
+
+            <div class="nav-links">
+                <a href="#features">Features</a>
+                <a href="#how-it-works">How It Works</a>
+                <a href="#about">About</a>
+                <a href="https://github.com/masummuntaha/Email-to-LinkedIn" target="_blank" rel="noopener" class="button button-primary">GitHub ↗</a>
+            </div>
+        </nav>
+    </div>
+</header>
+
+<main>
+
+    <section class="hero">
+        <div class="container">
+            <div class="hero-content">
+
+                <div class="tag">
+                    <span></span>
+                    EMAIL TO LINKEDIN PROFILE FINDER
+                </div>
+
+                <h1>
+                    Find LinkedIn Profiles<br>
+                    From <span class="gradient-text">Email Addresses</span>
+                </h1>
+
+                <p class="hero-description">
+                    Email-to-LinkedIn is a profile discovery and account checking tool designed to help connect email addresses with LinkedIn profile links. Explore the project, its capabilities, and its source code.
+                </p>
+
+                <div class="hero-buttons">
+                    <a href="https://github.com/masummuntaha/Email-to-LinkedIn" target="_blank" rel="noopener" class="button button-primary">
+                        ★ View on GitHub
+                    </a>
+
+                    <a href="https://github.com/masummuntaha/Email-to-LinkedIn/archive/refs/heads/main.zip" class="button button-outline">
+                        ↓ Download Source
+                    </a>
+                </div>
+
+                <p class="hero-note">
+                    Explore the source code and project documentation on GitHub.
+                </p>
+
+            </div>
+        </div>
+    </section>
+
+    <section class="section" id="features">
+        <div class="container">
+
+            <div class="section-heading">
+                <h2>Powerful <span class="gradient-text">Capabilities</span></h2>
+                <p>Discover the main purposes of the Email-to-LinkedIn project.</p>
+            </div>
+
+            <div class="features">
+
+                <article class="feature-card">
+                    <div class="feature-icon">🔎</div>
+                    <h3>Email to LinkedIn Finder</h3>
+                    <p>Explore the relationship between email addresses and LinkedIn profile links.</p>
+                </article>
+
+                <article class="feature-card">
+                    <div class="feature-icon">👤</div>
+                    <h3>LinkedIn Profile Discovery</h3>
+                    <p>A tool focused on discovering LinkedIn profile URLs associated with email-based searches.</p>
+                </article>
+
+                <article class="feature-card">
+                    <div class="feature-icon">⚡</div>
+                    <h3>Account Status Checking</h3>
+                    <p>Includes LinkedIn live/dead account checking functionality.</p>
+                </article>
+
+                <article class="feature-card">
+                    <div class="feature-icon">📋</div>
+                    <h3>Email List Processing</h3>
+                    <p>Designed around email-list checking and LinkedIn profile discovery workflows.</p>
+                </article>
+
+                <article class="feature-card">
+                    <div class="feature-icon">🔗</div>
+                    <h3>Profile URL Lookup</h3>
+                    <p>Focuses on finding LinkedIn profile links rather than manually searching for every profile.</p>
+                </article>
+
+                <article class="feature-card">
+                    <div class="feature-icon">💻</div>
+                    <h3>Developer Friendly</h3>
+                    <p>Explore the project repository, source files, and documentation directly on GitHub.</p>
+                </article>
+
+            </div>
+        </div>
+    </section>
+
+    <section class="section workflow" id="how-it-works">
+        <div class="container">
+
+            <div class="section-heading">
+                <h2>Explore the <span class="gradient-text">Project</span></h2>
+                <p>Get started with the project through its GitHub repository.</p>
+            </div>
+
+            <div class="steps">
+
+                <div class="step">
+                    <div class="step-number">01</div>
+                    <div>
+                        <h3>Visit the GitHub Repository</h3>
+                        <p>Open the official repository to access the project files and documentation.</p>
+                    </div>
+                </div>
+
+                <div class="step">
+                    <div class="step-number">02</div>
+                    <div>
+                        <h3>Download the Source Code</h3>
+                        <p>Clone or download the repository to your local environment.</p>
+                    </div>
+                </div>
+
+                <div class="step">
+                    <div class="step-number">03</div>
+                    <div>
+                        <h3>Follow the Documentation</h3>
+                        <p>Read the README and follow the available setup and usage instructions.</p>
+                    </div>
+                </div>
+
+                <div class="step">
+                    <div class="step-number">04</div>
+                    <div>
+                        <h3>Explore Email-to-LinkedIn</h3>
+                        <p>Discover the available profile lookup and account checking capabilities.</p>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <section class="section" id="about">
+        <div class="container">
+
+            <div class="showcase">
+
+                <div>
+                    <div class="tag">ABOUT THE PROJECT</div>
+
+                    <h2>
+                        One Project.<br>
+                        <span class="gradient-text">Email to LinkedIn.</span>
+                    </h2>
+
+                    <p>
+                        Email-to-LinkedIn is a dedicated LinkedIn profile link grabber created for email-based profile discovery and account checking.
+                    </p>
+
+                    <p>
+                        Whether you're exploring LinkedIn profile discovery, email lookup workflows, or account status checking, this project provides a dedicated starting point with its source code available on GitHub.
+                    </p>
+
+                    <a href="https://github.com/masummuntaha/Email-to-LinkedIn" target="_blank" rel="noopener" class="button button-primary">
+                        Explore Source Code ↗
+                    </a>
+                </div>
+
+                <div class="showcase-image">
+                    <img src="Checker.jpg" alt="Email to LinkedIn checker project screenshot" loading="lazy">
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <section class="keyword-section">
+        <div class="container">
+            <div class="section-heading">
+                <h2>Discover <span class="gradient-text">Email-to-LinkedIn</span></h2>
+                <p>Explore the different search terms and use cases associated with this project.</p>
+            </div>
+
+            <div class="keywords">
+                <span class="keyword">Email to LinkedIn</span>
+                <span class="keyword">LinkedIn Profile Finder</span>
+                <span class="keyword">Email to LinkedIn Profile Link</span>
+                <span class="keyword">LinkedIn URL Finder</span>
+                <span class="keyword">LinkedIn Account Checker</span>
+                <span class="keyword">LinkedIn Live Checker</span>
+                <span class="keyword">Email Lookup Tool</span>
+                <span class="keyword">LinkedIn Profile Discovery</span>
+                <span class="keyword">Bulk Email Checker</span>
+                <span class="keyword">LinkedIn Tools</span>
+                <span class="keyword">Email Automation</span>
+                <span class="keyword">Profile URL Lookup</span>
+                <span class="keyword">B2B Contact Research</span>
+                <span class="keyword">Professional Profile Finder</span>
+            </div>
+        </div>
+    </section>
+
+    <section class="container">
+        <div class="cta">
+            <h2>Ready to Explore <span class="gradient-text">Email-to-LinkedIn?</span></h2>
+            <p>Visit the official GitHub repository to access the source code and project documentation.</p>
+
+            <a href="https://github.com/masummuntaha/Email-to-LinkedIn" target="_blank" rel="noopener" class="button button-primary">
+                ★ Open GitHub Repository
+            </a>
+        </div>
+    </section>
+
+</main>
+
+<footer>
+    <div class="container">
+        <div class="footer-content">
+            <a href="#" class="logo">
+                <span class="logo-icon">E</span>
+                <span>Email<span class="gradient-text">2</span>LinkedIn</span>
+            </a>
+
+            <p>© <span id="year">2026</span> Email-to-LinkedIn. Created by Masum Muntaha.</p>
+
+            <div class="footer-links">
+                <a href="https://github.com/masummuntaha/Email-to-LinkedIn" target="_blank" rel="noopener">GitHub</a>
+                <a href="https://github.com/masummuntaha" target="_blank" rel="noopener">Author</a>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<script>
+    document.getElementById("year").textContent = new Date().getFullYear();
+</script>
+
+</body>
+</html>
