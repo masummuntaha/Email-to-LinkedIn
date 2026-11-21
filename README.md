@@ -1,4 +1,4 @@
-# Email-to-LinkedIn-Checker.
+# Email-to-LinkedIn-Checker | Email to LinkedIn Account Finder.
 <br>
 Email to LinkedIn Profile link grabber.<br>
 Cheapest cost to check emails list to LinkedIn.<br>
